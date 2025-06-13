@@ -1,0 +1,96 @@
+@model TaskManagementSystem.Models.User
+@{
+    ViewData["Title"] = "Registro";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-person-plus-fill display-1 text-success"></i>
+                    <h3>Criar Conta</h3>
+                    <p class="text-muted">Preencha os dados para criar sua conta</p>
+                </div>
+
+                <form method="post" asp-action="Register">
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <h5 class="text-primary">
+                                <i class="bi bi-person-badge"></i> Dados do Funcionário
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="workerName" class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" id="workerName" name="workerName" 
+                                   placeholder="Digite o nome completo" required maxlength="100">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="workerGender" class="form-label">Gênero</label>
+                            <select class="form-select" id="workerGender" name="workerGender" required>
+                                <option value="">Selecione</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                                <option value="O">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="workerPosition" class="form-label">Posição/Cargo</label>
+                        <input type="text" class="form-control" id="workerPosition" name="workerPosition" 
+                               placeholder="Ex: Desenvolvedor, Analista, Gerente" required maxlength="50">
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <h5 class="text-primary">
+                                <i class="bi bi-key"></i> Dados de Acesso
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Role" class="form-label">Função no Sistema</label>
+                            <select asp-for="Role" class="form-select" required>
+                                <option value="">Selecione a função</option>
+                                <option value="Admin">Administrador</option>
+                                <option value="Manager">Gerente</option>
+                                <option value="User">Usuário Padrão</option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Password" class="form-label">Senha</label>
+                            <input asp-for="Password" type="password" class="form-control" 
+                                   placeholder="Mínimo 6 caracteres" required minlength="6">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-person-plus"></i> Criar Conta
+                        </button>
+                        <a asp-action="Login" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Voltar ao Login
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

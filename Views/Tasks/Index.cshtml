@@ -1,0 +1,99 @@
+@model IEnumerable<TaskManagementSystem.Models.Task>
+@{
+  ViewData["Title"] = "Tarefas";
+}
+
+<div class="container">
+  <div class="pagetitle d-flex justify-content-between">
+    <div class="">
+      <h1>Tarefas</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index"></a>Inicio</a></li>
+          <li class="breadcrumb-item"><a asp-asp-controller="Tasks" asp-action="Index">Tarefas</a></li>
+          <li class="breadcrumb-item active"><a asp-controller="Tasks" asp-action="Index">Listar</a></li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-2">
+      <a asp-controller="Tasks" asp-action="Create" class="btn btn-secondary text-white col-12"><i
+          class="bi bi-plus"></i></a>
+    </div>
+  </div>
+
+  @if (Model.Any())
+  {
+    <section class="section register min-vh-100 d-flex flex-column align-items-start justify-content-start py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+            <div class="card container">
+              <div class="card-body col-12">
+                <h5 class="card-title">Tarefas</h5>
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Funcionário</th>
+                      <th scope="col">Tarefa</th>
+                      <th scope="col">Tipo</th>
+                      <th scope="col">Prazo</th>
+                      <th scope="col">Estado</th>
+                      <th scope="col">Acção</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (var task in Model)
+                    {
+                      <tr>
+                        <th scope="row">@task.Id</th>
+                        <td>@task.Worker?.Name</td>
+                        <td>@task.Title</td>
+                        <td>@task.Type</td>
+                        <td>@task.Deadline.ToString("yyyy-MM-dd")</td>
+                        <td>@task.Status</td>
+                        <td>
+                          <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id" class="text-primary me-2">
+                            <i class="bi bi-eye"></i>
+                          </a>
+                          <a asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.Id" class="text-danger">
+                            <i class="bi bi-trash"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    }
+                    @* <tr>
+                      <th scope="row">1</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                      <td>Não iniciada</td>
+                      <td>
+                        <a asp-controller="Tasks" asp-action="Details"><i class="bi bi-eye"></i></a>
+                        <a asp-controller="Tasks" asp-action="Delete"><i class="bi bi-trash"></i></a>
+                      </td>
+                    </tr> *@
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+  else
+  {
+    <div class="text-center py-5">
+      <i class="bi bi-people display-1 text-muted"></i>
+      <h3 class="text-muted">Nenhuma tarefa regitada</h3>
+      <p class="text-muted">Comece atribuindo umbrellajs nova a funcionário.</p>
+      <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-person-plus"></i> Adicionar Primeira Tarefa
+      </a>
+    </div>
+  }
+</div>

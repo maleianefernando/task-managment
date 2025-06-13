@@ -1,0 +1,74 @@
+## Compilação
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+
+## Ferramentas do Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Arquivos do sistema
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Logs
+*.log
+
+## Testes e relatórios
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+## Configurações do Rider
+.idea/
+*.sln.iml
+
+## Configurações locais
+*.db
+*.sqlite
+*.mdf
+*.ldf
+.env
+*.secret
+*.key
+*.pem
+
+## Web
+wwwroot/dist/
+wwwroot/node_modules/
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+*.tgz
+.pnpm-debug.log
+
+## Dotnet Tools
+.dotnet-tools/
+
+## Outras extensões comuns
+*.bak
+*.tmp
+*.swp
+*.orig
+
+## Git e sistema
+*.orig
+.DS_Store

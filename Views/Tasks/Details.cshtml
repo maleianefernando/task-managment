@@ -1,0 +1,178 @@
+@model TaskManagementSystem.Models.Task
+@{
+    ViewData["Title"] = "Tarefa";
+}
+
+<div class="pagetitle d-flex justify-content-between">
+    <div class="">
+        <h1>Tarefa</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Tasks" asp-action="Index">Tarefa</a></li>
+                <li class="breadcrumb-item active"><a asp-controller="Tasks" asp-action="Index">Visualizar</a></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-2">
+        <a href="#/tasks/register" data-navigo class="btn btn-secondary text-white col-12"><i
+                class="bi bi-plus"></i></a>
+    </div>
+</div>
+<!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                Visualizar
+                            </button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
+                                Editar
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                            @* <h5 class="card-title">Descrição</h5>
+              <p class="small fst-italic">
+                Sunt est soluta temporibus accusantium neque nam maiores cumque
+                temporibus. Tempora libero non est unde veniam est qui dolor. Ut
+                sunt iure rerum quae quisquam autem eveniet perspiciatis odit.
+                Fuga sequi sed ea saepe at unde.
+              </p> *@
+
+                            <h5 class="card-title">Detalhes da tarefa</h5>
+
+                            <div class="worker row">
+                                <div class="col-lg-3 col-md-4 label">Nome do funcionario</div>
+                                <div class="col-lg-9 col-md-8 worker-name">@Model.Worker?.Name</div>
+                            </div>
+
+                            <div class="task row">
+                                <div class="col-lg-3 col-md-4 label">Tarefa</div>
+                                <div class="col-lg-9 col-md-8 task-title">
+                                    @Model.Title
+                                </div>
+                            </div>
+
+                            <div class="deadline row">
+                                <div class="col-lg-3 col-md-4 label">Prazo</div>
+                                <div class="col-lg-9 col-md-8 task-deadline">@Model.Deadline</div>
+                            </div>
+
+                            <div class="status row">
+                                <div class="col-lg-3 col-md-4 label">Estado</div>
+                                <div class="col-lg-9 col-md-8 task-status">@Model.Status</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Numero da tarefa</div>
+                                <div class="col-lg-9 col-md-8 task-id">@Model.Id</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Numero do funcionario</div>
+                                <div class="col-lg-9 col-md-8 worker-id">@Model.Worker?.Id</div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                            <!-- Profile Edit Form -->
+                            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                            <form asp-controller="Tasks" asp-action="Edit" method="post">
+                                @Html.AntiForgeryToken()
+
+                                <div class="row mb-3">
+                                    <label for="task-id" class="col-md-4 col-lg-3 col-form-label">Numero da
+                                        tarefa</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="@Model.Id" type="text" class="form-control"
+                                            readonly />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="worker-id" class="col-md-4 col-lg-3 col-form-label">Numero do
+                                        funcionario</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="WorkerId" type="text" class="form-control"
+                                            disabled />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="Title" class="col-md-4 col-lg-3 col-form-label">Tarefa</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="Title" type="text" class="form-control" value="@Model.Title" />
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="WorkerId" class="col-md-4 col-lg-3 col-form-label">Nome do
+                                        funcionario</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <select asp-for="WorkerId" asp-items="ViewBag.WorkerId"
+                                            class="workers form-select" aria-label="Default select example">
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.WorkerId, "", new { @class =
+                                        "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="Deadline" class="col-md-4 col-lg-3 col-form-label">Prazo</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="Deadline" type="date" class="form-control"/>
+                                        @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="Status" class="col-md-4 col-lg-3 col-form-label">Estado</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <select asp-for="Status" asp-items="ViewBag.StatusOptions"
+                                            class="status-select form-select" aria-label="Default select example">
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class =
+                                                                                "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="Type" class="col-md-4 col-lg-3 col-form-label">Tipo</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <select asp-for="Type" asp-items="ViewBag.TypeOptions"
+                                            class="type-select form-select" aria-label="Default select example">
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">
+                                        Guardar Alterações
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Para validação do lado cliente -->
+                            @section Scripts {
+                                <partial name="_ValidationScriptsPartial" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

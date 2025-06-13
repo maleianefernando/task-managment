@@ -1,0 +1,93 @@
+@model TaskManagementSystem.Models.Worker
+@{
+    ViewData["Title"] = "Novo Funcionário";
+}
+<div class="container">
+    <div class="pagetitle d-flex justify-content-between">
+        <div class="">
+            <h1>Funcionarios</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Início</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Workers" asp-action="Index">Funcionarios</a></li>
+                    <li class="breadcrumb-item active"><a asp-controller="Workers" asp-action="Create">Registar</a></li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-2">
+            <a asp-controller="Workers" asp-action="Index" class="btn btn-secondary text-white col-12"><i
+                    class="bi bi-list"></i></a>
+        </div>
+    </div>
+
+    <section class="section register min-vh-100 d-flex flex-column align-items-center py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="pt-4 pb-2">
+                                <h5 class="card-title text-center pb-0 fs-4">
+                                    Registar
+                                </h5>
+                                <p class="text-center small">
+                                    Há muito trabalho pela frente, registe mais funcionarios.
+                                </p>
+                            </div>
+
+                            <form class="register row g-3 needs-validation" asp-action="Create" method="post"
+                                novalidate>
+                                @Html.AntiForgeryToken()
+                                <div class="col-12">
+                                    <label asp-for="Name" class="form-label">Nome Completo</label>
+                                    <input asp-for="Name" type="text" class="form-control" id="name"
+                                        required />
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-12">
+                                    <label aso-for="Gender" class="form-label">Gênero</label>
+                                    <div class="col-md-8 col-12 d-flex justify-content-between mb-2">
+                                        <div class="form-check">
+                                            <input asp-for="Gender" class="form-check-input" type="radio" value="M" />
+                                            <label asp-for="Gender" class="form-check-label">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input asp-for="Gender" class="form-check-input" type="radio"
+                                                id="female-radio" value="F" />
+                                            <label asp-for="Gender" class="form-check-label">
+                                                Feminino
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Position" class="form-label">Cargo/Função</label>
+                                    <select asp-for="Position" class="position-select form-select" asp-items="ViewBag.PositionOptions"
+                                        aria-label="Default select example">
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit">
+                                        Registar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

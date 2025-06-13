@@ -1,0 +1,122 @@
+@model TaskManagementSystem.Models.Worker
+
+@{
+    ViewData["Title"] = "Eliminar Funcionario";
+}
+<div class="container">
+    <div class="pagetitle d-flex justify-content-between">
+        <div class="">
+            <h1>Eliminar Funcionário</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Workers" asp-action="Index">Funcionários</a></li>
+                    <li class="breadcrumb-item active">Eliminar</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-2">
+            <a asp-action="Index" class="btn btn-secondary text-white col-12"><i class="bi bi-list"></i></a>
+        </div>
+    </div>
+
+    <section class="section section register min-vh-100 d-flex flex-column align-items-center py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Confirmar Eliminação</h5>
+
+                            <div class="alert alert-danger">
+                                <i class="bi bi-exclamation-triangle me-2"></i>
+                                <strong>Atenção!</strong> Esta ação não pode ser desfeita. Tem certeza que deseja
+                                eliminar este funcionário?
+                            </div>
+
+                            @if (Model.Tasks?.Any() == true)
+                            {
+                                <div class="alert alert-warning">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    <strong>Aviso:</strong> Este funcionário possui @Model.Tasks.Count tarefa(s)
+                                    associada(s).
+                                    Eliminar este funcionário pode afetar as tarefas relacionadas.
+                                </div>
+                            }
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Nome:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-plaintext">@Model.Name</p>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Cargo:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-plaintext">@Model.Position</p>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Gênero:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-plaintext">
+                                        @(Model.Gender == 'M' ? "Masculino" :
+                                                                                Model.Gender == 'F' ? "Feminino" : "Outro")
+                                    </p>
+                                </div>
+                            </div>
+
+                            @if (Model.Tasks?.Any() == true)
+                            {
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label fw-bold">Tarefas:</label>
+                                    <div class="col-sm-9">
+                                        <div class="list-group list-group-flush">
+                                            @foreach (var task in Model.Tasks.Take(5))
+                                            {
+                                                <div class="list-group-item px-0">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span>@task.Title</span>
+                                                        <span class="badge 
+                                                            @(task.Status == "Concluída" ? "bg-success" :
+                                                                                                                    task.Status == "Em Progresso" ? "bg-warning" : 
+                                                                                                                    task.Status == "Pendente" ? "bg-secondary" : "bg-danger")">
+                                                    @task.Status
+                                                </span>
+                                            </div>
+                                        </div>
+                                                                                }
+                                            @if (Model.Tasks.Count > 5)
+                                            {
+                                                <div class="list-group-item px-0 text-muted">
+                                                    ... e mais @(Model.Tasks.Count - 5) tarefa(s)
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form asp-action="Delete" method="post" class="d-inline">
+                                        <input type="hidden" asp-for="Id" />
+                                        <button type="submit" class="btn btn-danger me-2"
+                                            onclick="return confirm('Tem certeza que deseja eliminar este funcionário? Esta ação não pode ser desfeita.')">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                    <a asp-action="Index" class="btn btn-secondary">
+                                        <i class="bi bi-arrow-left"></i> Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

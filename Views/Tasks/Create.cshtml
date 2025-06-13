@@ -1,0 +1,107 @@
+@model TaskManagementSystem.Models.Task
+@{
+    ViewData["Title"] = "Registar Tarefa";
+}
+
+<div class="container">
+    <div class="pagetitle d-flex justify-content-between">
+        <div class="">
+            <h1>Tarefas</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Início</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Tasks" asp-action="Index">Tarefas</a></li>
+                    <li class="breadcrumb-item active"><a asp-controller="Tasks" asp-action="Create">Registar</a></li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-2">
+            <a asp-action="Index" class="btn btn-secondary text-white col-12"><i class="bi bi-list"></i></a>
+        </div>
+    </div>
+
+    <section class="section register min-vh-100 d-flex flex-column align-items-center py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="pt-4 pb-2">
+                                <h5 class="card-title text-center pb-0 fs-4">
+                                    Registar
+                                </h5>
+                                <p class="text-center small">
+                                    Seus funcionários estão à espera, atribua-lhes novas tarefas.
+                                </p>
+                            </div>
+
+                            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                            <form class="register row g-3 needs-validation" asp-action="Create" method="post"
+                                novalidate>
+                                @Html.AntiForgeryToken()
+                                <div class="col-12">
+                                    <label asp-for="Title" class="form-label">Tarefa</label>
+                                    <input asp-for="Title" type="text" class="form-control" required />
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                </div>
+
+                                @* <div class="col-12">
+                                    <label for="desc" class="form-label">Descrição</label>
+                                    <textarea type="text" class="form-control" id="task-description"></textarea>
+                                    <div class="invalid-feedback">Por favor, a descricao!</div>
+                                </div> *@
+
+                                <div class="col-12">
+                                    <label asp-for="WorkerId" class="form-label">Funcionário</label>
+                                    <select asp-for="WorkerId" asp-items="ViewBag.WorkerId" class="workers form-select"
+                                        aria-label="Default select example">
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.WorkerId, "", new { @class = "text-danger"
+                                                                        })
+
+                                    @Html.ValidationMessageFor(model => model.Worker, "", new { @class = "text-danger"
+                                                                        })
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Deadline" class="form-label">Prazo</label>
+                                    <input asp-for="Deadline" type="date" class="form-control" />
+                                    @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger"
+                                                                        })
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Type" class="type form-label">Tipo</label>
+                                    <select asp-for="Type" asp-items="ViewBag.TypeOptions"
+                                        class="type-select form-select" aria-label="Default select example">
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Status" class="form-label">Estado</label>
+                                    <select asp-for="Status" asp-items="ViewBag.StatusOptions"
+                                        class="status-select form-select" aria-label="Default select example">
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger"
+                                                                        })
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit">
+                                        Registar
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Para validação do lado cliente -->
+                            @section Scripts {
+                                <partial name="_ValidationScriptsPartial" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,93 @@
+@model IEnumerable<TaskManagementSystem.Models.Worker>
+@{
+    ViewData["Title"] = "Funcionários";
+}
+
+<div class="pagetitle d-flex justify-content-between">
+    <div class="">
+        <h1>Funcionarios</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Workers" asp-action="Index">Funcionários</a></li>
+                <li class="breadcrumb-item active">Listar</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-2">
+        <a asp-controller="Workers" asp-action="Create" class="btn btn-secondary text-white col-12"><i
+                class="bi bi-plus"></i></a>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <section class="section register min-vh-100 d-flex flex-column align-items-start justify-content-start py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+                    <div class="card container">
+                        <div class="card-body col-12">
+                            <h5 class="card-title">Funcionários</h5>
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nome Completo</th>
+                                        <th scope="col">Cargo</th>
+                                        <th scope="col">Genero</th>
+                                        <th scope="col">Data de registo</th>
+                                        <th scope="col">Acção</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var worker in Model)
+                                    {
+                                        <tr>
+                                            <td>@worker.Id</td>
+                                            <td>@worker.Name</td>
+                                            <td>@worker.Position</td>
+                                            <td>@(worker.Gender == 'M' ? "Masculino" : "Feminino")</td>
+                                            <td>@worker.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                            <td>
+                                                <a asp-action="Details" asp-route-id="@worker.Id"><i class="bi bi-eye"></i></a>
+                                                <a asp-action="Edit" asp-route-id="@worker.Id"><i class="bi bi-pencil"></i></a>
+                                                <a asp-action="Delete" asp-route-id="@worker.Id"><i class="bi bi-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @* <tr>
+                    <th scope="row">1</th>
+                    <td>Brandon Jacob</td>
+                    <td>Designer</td>
+                    <td>M</td>
+                    <td>2016-05-25</td>
+                    <td>
+                      <a href="#/workers/show" data-navigo
+                        ><i class="bi bi-eye"></i
+                      ></a>
+                      <a href=""><i class="bi bi-trash"></i></a>
+                    </td>
+                  </tr> *@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="bi bi-people display-1 text-muted"></i>
+        <h3 class="text-muted">Nenhum funcionário regitado</h3>
+        <p class="text-muted">Comece adicionando um novo funcionário ao sistema.</p>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-person-plus"></i> Adicionar Primeiro Funcionário
+        </a>
+    </div>
+}
