@@ -56,6 +56,7 @@
                                     <label asp-for="WorkerId" class="form-label">Funcionário</label>
                                     <select asp-for="WorkerId" asp-items="ViewBag.WorkerId" class="workers form-select"
                                         aria-label="Default select example">
+                                        <option value="">-- Selecione um funcionário --</option>
                                     </select>
                                     @Html.ValidationMessageFor(model => model.WorkerId, "", new { @class = "text-danger"
                                                                         })

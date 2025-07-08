@@ -7,10 +7,10 @@ namespace TaskManagementSystem.Models
     {
         public int Id { get; set; }
         
-        [Required(ErrorMessage = "Worker é obrigatório")]
+        [Required(ErrorMessage = "Por favor, informe o funcionario.")]
         public int WorkerId { get; set; }
         
-        [Required(ErrorMessage = "Função é obrigatória")]
+        [Required(ErrorMessage = "Por favor, informe a função")]
         [StringLength(30, ErrorMessage = "Função deve ter no máximo 30 caracteres")]
         public string Role { get; set; }
         

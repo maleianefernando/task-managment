@@ -83,7 +83,8 @@ namespace TaskManagementSystem.Controllers
 
             if (worker == null)
             {
-                ModelState.AddModelError("WorkerId", "Funcionário inválido");
+                                task.Worker = worker;
+                // ModelState.AddModelError("WorkerId", "Funcionário inválido");
             }
             else
             {
